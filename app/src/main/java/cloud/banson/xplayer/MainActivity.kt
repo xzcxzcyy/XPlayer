@@ -10,7 +10,9 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import cloud.banson.xplayer.data.Video
+import cloud.banson.xplayer.databinding.ActivityMainBinding
 import java.util.concurrent.TimeUnit
 
 
@@ -19,14 +21,12 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "ACTIVITY_MAIN"
     }
 
+    private var binding: ActivityMainBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        initView()
         checkAndApplyForPermissions()
-
-        val resultVideos = getVideos()
-        Log.d(TAG, "onCreate: ${resultVideos.size}")
-        Log.d(TAG, "onCreate: ${resultVideos[0]}")
     }
 
     private fun checkAndApplyForPermissions() {
@@ -61,10 +61,10 @@ class MainActivity : AppCompatActivity() {
 
         val sortOrder = "${MediaStore.Video.Media.DISPLAY_NAME} ASC"
 
-        val selection = "${MediaStore.Video.Media.DURATION} >= ?"
-        val selectionArgs = arrayOf(
-            TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES).toString()
-        )
+        // val selection = "${MediaStore.Video.Media.DURATION} >= ?"
+        // val selectionArgs = arrayOf(
+        //     TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES).toString()
+        // )
 
         val query = applicationContext.contentResolver.query(
             MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
@@ -73,9 +73,9 @@ class MainActivity : AppCompatActivity() {
             null,
             sortOrder
         )
-//        Log.d(TAG, "getVideos: ${query == null}")
+
         query?.use { cursor ->
-//            cursor.moveToFirst()
+
             // Cache column indices.
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
             val nameColumn =
@@ -100,5 +100,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return videoList
+    }
+
+    private fun initView() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
 }
