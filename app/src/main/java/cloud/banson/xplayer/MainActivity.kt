@@ -6,15 +6,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.ActivityMainBinding
-import java.util.concurrent.TimeUnit
-
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -37,69 +33,17 @@ class MainActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
-                    this, "android.permission" +
-                            ".READ_EXTERNAL_STORAGE"
+                    this,
+                    "android.permission.READ_EXTERNAL_STORAGE"
                 ) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(
-                    this, "android.permission" +
-                            ".WRITE_EXTERNAL_STORAGE"
+                    this,
+                    "android.permission.WRITE_EXTERNAL_STORAGE"
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 requestPermissions(permissionsStorage, 101)
             }
         }
-    }
-
-    private fun getVideos(): MutableList<Video> {
-        val videoList = mutableListOf<Video>()
-
-        val projection = arrayOf(
-            MediaStore.Video.Media._ID,
-            MediaStore.Video.Media.DISPLAY_NAME,
-            MediaStore.Video.Media.SIZE
-        )
-
-        val sortOrder = "${MediaStore.Video.Media.DISPLAY_NAME} ASC"
-
-        // val selection = "${MediaStore.Video.Media.DURATION} >= ?"
-        // val selectionArgs = arrayOf(
-        //     TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES).toString()
-        // )
-
-        val query = applicationContext.contentResolver.query(
-            MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-            projection,
-            null,
-            null,
-            sortOrder
-        )
-
-        query?.use { cursor ->
-
-            // Cache column indices.
-            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
-            val nameColumn =
-                cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME)
-            val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE)
-
-            while (cursor.moveToNext()) {
-                // Get values of columns for a given video.
-                val id = cursor.getLong(idColumn)
-                val name = cursor.getString(nameColumn)
-                val duration = 0
-                val size = cursor.getInt(sizeColumn)
-
-                val contentUri: Uri = ContentUris.withAppendedId(
-                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                    id
-                )
-
-                // Stores column values and the contentUri in a local object
-                // that represents the media file.
-                videoList += Video(contentUri, name, duration, size)
-            }
-        }
-        return videoList
     }
 
     private fun initView() {
