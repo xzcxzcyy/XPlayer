@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import cloud.banson.xplayer.R
 import cloud.banson.xplayer.databinding.SelectVideoFragmentBinding
 
@@ -36,7 +37,11 @@ class SelectVideoFragment : Fragment() {
     private fun initView(inflater: LayoutInflater, container: ViewGroup?) {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.select_video_fragment, container, false)
-        
+        val myAdapter = VideoAdapter()
+        binding.selectRecyclerView.apply {
+            layoutManager = GridLayoutManager(context, 3)
+            adapter = myAdapter
+        }
     }
 
 }
