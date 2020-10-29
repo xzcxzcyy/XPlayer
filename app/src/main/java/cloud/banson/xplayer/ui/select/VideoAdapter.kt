@@ -13,7 +13,8 @@ class VideoAdapter : ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallba
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Video) {
             binding.apply {
-                videoTextView.text = item.uri.path
+                videoNameTextView.text = item.name
+                thumbNail.setImageBitmap(item.thumbNail)
                 executePendingBindings()
             }
         }

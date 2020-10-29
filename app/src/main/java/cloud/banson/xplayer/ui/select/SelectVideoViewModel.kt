@@ -1,18 +1,14 @@
 package cloud.banson.xplayer.ui.select
 
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
-import androidx.lifecycle.ViewModel
-import cloud.banson.xplayer.data.Video
-import kotlin.coroutines.*
 import android.provider.MediaStore
 import android.util.Size
-import android.view.animation.AnimationSet
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import cloud.banson.xplayer.data.Video
 import kotlinx.coroutines.*
 
 class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
@@ -36,7 +32,7 @@ class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
                 MediaStore.Video.Media.SIZE
             )
 
-            val sortOrder = "${MediaStore.Video.Media.DISPLAY_NAME} ASC"
+            val sortOrder = "${MediaStore.Video.Media.DATE_MODIFIED} DESC"
 
             val query = appContext.contentResolver.query(
                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
@@ -45,6 +41,7 @@ class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
                 null,
                 sortOrder
             )
+
 
             query?.use { cursor ->
 
@@ -65,7 +62,7 @@ class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
                     )
                     val thumbNail = appContext.contentResolver.loadThumbnail(
                         contentUri,
-                        Size(640, 480), null
+                        Size(640, 640), null
                     )
 
                     // Stores column values and the contentUri in a local object

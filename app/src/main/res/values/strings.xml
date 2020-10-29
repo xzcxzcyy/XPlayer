@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">X Player</string>
     <string name="item_string">VideoItem</string>
+    <string name="video_name_str">视频名称</string>
 </resources>
