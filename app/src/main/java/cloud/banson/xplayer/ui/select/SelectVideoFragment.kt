@@ -2,6 +2,7 @@ package cloud.banson.xplayer.ui.select
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +16,14 @@ import cloud.banson.xplayer.databinding.SelectVideoFragmentBinding
 class SelectVideoFragment : Fragment() {
 
     companion object {
-        fun newInstance() = SelectVideoFragment()
+        private const val TAG = "SelectVideoFragment"
     }
 
     private lateinit var viewModel: SelectVideoViewModel
     private lateinit var binding: SelectVideoFragmentBinding
-    private val myAdapter = VideoAdapter()
+    private val myAdapter = VideoAdapter {
+        Log.d(TAG, it.toString())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

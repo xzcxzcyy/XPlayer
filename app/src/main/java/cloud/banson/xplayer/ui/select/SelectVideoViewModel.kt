@@ -42,9 +42,7 @@ class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
                 sortOrder
             )
 
-
             query?.use { cursor ->
-
                 // Cache column indices.
                 val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
                 val nameColumn =
