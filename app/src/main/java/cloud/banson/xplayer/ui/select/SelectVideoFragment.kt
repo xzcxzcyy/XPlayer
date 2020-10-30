@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import cloud.banson.xplayer.R
+import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.data.VideoInfo
 import cloud.banson.xplayer.data.VideoDatabase
 import cloud.banson.xplayer.databinding.SelectVideoFragmentBinding
@@ -52,12 +53,12 @@ class SelectVideoFragment : Fragment() {
         myAdapter = VideoAdapter {
             val destination = File(context!!.filesDir, it.name)
             it.uri.copyTo(destination)
-            /*val newItem = VideoInfo(destination.toUri(), it.name, it.size, it.thumbNail)
+            val newItem = Video(0,it.uri.path!!,it.name)
             uiScope.launch {
                 withContext(Dispatchers.IO) {
                     videoDatabaseDao.insert(newItem)
                 }
-            }*/
+            }
         }
         binding.selectRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 3)
