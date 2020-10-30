@@ -14,9 +14,9 @@ interface VideoDatabaseDao {
     @Delete
     fun delete(item: Video)
 
-    @Query("SELECT * FROM internalVideos WHERE databaseId=:id")
-    fun getItemById(id: Long): Video?
+    @Query("SELECT * FROM internalVideo WHERE id=:targetId")
+    fun getItemById(targetId: Long): Video?
 
-    @Query("SELECT * FROM internalVideos")
+    @Query("SELECT * FROM internalVideo")
     fun getItemList(): LiveData<List<Video>>
 }

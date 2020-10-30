@@ -1,15 +1,11 @@
 package cloud.banson.xplayer
 
-import android.content.ContentUris
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

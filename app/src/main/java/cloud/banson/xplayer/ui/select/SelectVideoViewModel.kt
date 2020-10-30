@@ -8,14 +8,14 @@ import android.provider.MediaStore
 import android.util.Size
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import cloud.banson.xplayer.data.Video
+import cloud.banson.xplayer.data.VideoInfo
 import kotlinx.coroutines.*
 
 class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
     private val job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
-    private val videoList = mutableListOf<Video>()
-    val videoListLive = MutableLiveData<MutableList<Video>>()
+    private val videoList = mutableListOf<VideoInfo>()
+    val videoListLive = MutableLiveData<MutableList<VideoInfo>>()
 
     init {
         uiScope.launch {
@@ -65,7 +65,7 @@ class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
 
                     // Stores column values and the contentUri in a local object
                     // that represents the media file.
-                    videoList += Video(contentUri, name, size, thumbNail)
+                    videoList += VideoInfo(contentUri, name, size, thumbNail)
                 }
             }
             withContext(Dispatchers.Main) {
