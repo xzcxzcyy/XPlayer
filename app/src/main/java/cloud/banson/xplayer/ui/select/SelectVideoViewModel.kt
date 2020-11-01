@@ -34,7 +34,12 @@ class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
             withContext(Dispatchers.IO) {
                 val destination = File(appContext.filesDir, item.name)
                 item.uri.copyTo(destination)
-                val newItem = Video(0, destination.toUri().path!!, destination.name)
+                val newItem = Video(
+                    0,
+                    destination.toUri().path!!,
+                    destination.name,
+                    System.currentTimeMillis()
+                )
                 videoDatabaseDao.insert(newItem)
             }
         }

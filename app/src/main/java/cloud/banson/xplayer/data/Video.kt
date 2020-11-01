@@ -13,5 +13,8 @@ data class Video(
     var uri: String = "",
 
     @ColumnInfo(name = "fileName")
-    var name: String = ""
+    var name: String = "",
+
+    @ColumnInfo(name = "time")
+    var time: Long = 0L
 )
