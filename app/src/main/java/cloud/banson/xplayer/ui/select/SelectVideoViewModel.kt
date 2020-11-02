@@ -29,7 +29,7 @@ class SelectVideoViewModel(private val appContext: Context) : ViewModel() {
         }
     }
 
-    val onItemClick: (VideoInfo) -> Unit = { item ->
+    fun onItemClick(item: VideoInfo) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 val destination = File(appContext.filesDir, item.name)

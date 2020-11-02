@@ -20,6 +20,30 @@
             android:layout_marginTop="64dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher"
             tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/selectTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_string"
+            app:layout_constraintBottom_toBottomOf="@+id/startImage"
+            app:layout_constraintEnd_toEndOf="@+id/startImage"
+            app:layout_constraintStart_toStartOf="@+id/startImage"
+            app:layout_constraintTop_toTopOf="@+id/startImage" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/resourceRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/startImage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

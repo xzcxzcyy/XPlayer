@@ -9,7 +9,7 @@ import cloud.banson.xplayer.data.VideoInfo
 import cloud.banson.xplayer.databinding.SelectVideoItemBinding
 
 class VideoAdapter(private val onClick: (VideoInfo) -> Unit) :
-    ListAdapter<VideoInfo, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
+    ListAdapter<VideoInfo, VideoAdapter.ViewHolder>(VideoInfoDiffCallback()) {
     class ViewHolder private constructor(
         private val binding: SelectVideoItemBinding,
         private val onClick: (VideoInfo) -> Unit
@@ -46,7 +46,7 @@ class VideoAdapter(private val onClick: (VideoInfo) -> Unit) :
     }
 }
 
-class VideoDiffCallback : DiffUtil.ItemCallback<VideoInfo>() {
+class VideoInfoDiffCallback : DiffUtil.ItemCallback<VideoInfo>() {
     override fun areItemsTheSame(oldItem: VideoInfo, newItem: VideoInfo): Boolean {
         return oldItem.uri == newItem.uri
     }

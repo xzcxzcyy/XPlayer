@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import cloud.banson.xplayer.R
 import cloud.banson.xplayer.databinding.SelectVideoFragmentBinding
@@ -38,7 +39,11 @@ class SelectVideoFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.select_video_fragment, container, false)
 
-        myAdapter = VideoAdapter(viewModel.onItemClick)
+        myAdapter = VideoAdapter {
+            viewModel.onItemClick(it)
+            this.findNavController()
+                .navigate(SelectVideoFragmentDirections.actionSelectVideoFragmentToListFragment())
+        }
 
         binding.selectRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 3)
