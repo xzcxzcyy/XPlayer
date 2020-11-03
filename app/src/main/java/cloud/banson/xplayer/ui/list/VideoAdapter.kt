@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.ExistListItemBinding
 
-class ExistListAdapter(private val onClick: (String) -> Unit) :
-    ListAdapter<Video, ExistListAdapter.ViewHolder>(VideoDiffCallback()) {
+class VideoAdapter(private val onClick: (String) -> Unit) :
+    ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
     class ViewHolder private constructor(
         private val binding: ExistListItemBinding,
         private val onClick: (String) -> Unit

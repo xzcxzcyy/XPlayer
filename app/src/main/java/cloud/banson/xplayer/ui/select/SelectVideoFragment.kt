@@ -20,7 +20,7 @@ class SelectVideoFragment : Fragment() {
 
     private lateinit var viewModel: SelectVideoViewModel
     private lateinit var binding: SelectVideoFragmentBinding
-    private lateinit var myAdapter: VideoAdapter
+    private lateinit var myAdapter: VideoInfoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,7 @@ class SelectVideoFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.select_video_fragment, container, false)
 
-        myAdapter = VideoAdapter {
+        myAdapter = VideoInfoAdapter {
             viewModel.onItemClick(it)
             this.findNavController()
                 .navigate(SelectVideoFragmentDirections.actionSelectVideoFragmentToListFragment())

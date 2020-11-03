@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import cloud.banson.xplayer.data.VideoInfo
 import cloud.banson.xplayer.databinding.SelectVideoItemBinding
 
-class VideoAdapter(private val onClick: (VideoInfo) -> Unit) :
-    ListAdapter<VideoInfo, VideoAdapter.ViewHolder>(VideoInfoDiffCallback()) {
+class VideoInfoAdapter(private val onClick: (VideoInfo) -> Unit) :
+    ListAdapter<VideoInfo, VideoInfoAdapter.ViewHolder>(VideoInfoDiffCallback()) {
     class ViewHolder private constructor(
         private val binding: SelectVideoItemBinding,
         private val onClick: (VideoInfo) -> Unit

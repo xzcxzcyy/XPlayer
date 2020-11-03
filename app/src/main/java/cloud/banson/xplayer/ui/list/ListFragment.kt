@@ -22,7 +22,7 @@ class ListFragment : Fragment() {
 
     private lateinit var viewModel: ListViewModel
     private lateinit var binding: ListFragmentBinding
-    private lateinit var myAdapter: ExistListAdapter
+    private lateinit var myAdapter: VideoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +51,7 @@ class ListFragment : Fragment() {
             this.findNavController()
                 .navigate(ListFragmentDirections.actionListFragmentToSelectVideoFragment())
         }
-        myAdapter = ExistListAdapter {
+        myAdapter = VideoAdapter {
             Log.d(TAG, "initListener: navigating to play view")
         }
         binding.resourceRecycler.adapter = myAdapter
