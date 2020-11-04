@@ -2,11 +2,11 @@ package cloud.banson.xplayer.ui.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.ExistListItemBinding
+import cloud.banson.xplayer.util.VideoDiffCallback
 
 class VideoAdapter(private val onClick: (String) -> Unit) :
     ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
@@ -40,10 +40,4 @@ class VideoAdapter(private val onClick: (String) -> Unit) :
             holder.bind(it)
         }
     }
-}
-
-class VideoDiffCallback : DiffUtil.ItemCallback<Video>() {
-    override fun areItemsTheSame(oldItem: Video, newItem: Video) = oldItem.id == newItem.id
-
-    override fun areContentsTheSame(oldItem: Video, newItem: Video) = oldItem == newItem
 }
