@@ -37,6 +37,7 @@ class PlayVideoFragment : Fragment() {
     }
 
     private fun setUpData() {
+        val arguments = PlayVideoFragmentArgs.fromBundle(requireArguments())
         videoAdapter = VideoAdapter(onCompleteListener = {
             it.stop()
             binding.viewPagerVideos.run {
@@ -53,6 +54,14 @@ class PlayVideoFragment : Fragment() {
         }
         viewModel.playList.observe(viewLifecycleOwner, {
             videoAdapter.submitList(it)
+            var startPos = 0
+            for (index in it.indices) {
+                if (it[index].id == arguments.id) {
+                    startPos = index
+                    break
+                }
+            }
+            binding.viewPagerVideos.setCurrentItem(startPos, false)
         })
     }
 }

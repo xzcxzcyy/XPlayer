@@ -40,7 +40,7 @@ class VideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListe
             binding.videoView.apply {
                 setVideoURI(Uri.parse(video.uriString))
                 setOnPreparedListener { mediaPlayer ->
-                    binding.progressBar.visibility = View.GONE
+//                    binding.progressBar.visibility = View.GONE
                     mediaPlayer.start()
                 }
                 setOnCompletionListener(onCompleteListener)
