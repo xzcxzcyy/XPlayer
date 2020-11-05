@@ -1,5 +1,6 @@
 package cloud.banson.xplayer.ui.play
 
+import android.media.MediaPlayer
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,21 +12,26 @@ import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.PlayVideoItemBinding
 import cloud.banson.xplayer.util.VideoDiffCallback
 
-class VideoAdapter : ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
+class VideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListener) :
+    ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
 
     companion object {
         private const val TAG = "PLAY_VIDEO_ADAPTER"
     }
 
     class ViewHolder private constructor(
-        private val binding: PlayVideoItemBinding
+        private val binding: PlayVideoItemBinding,
+        private val onCompleteListener: MediaPlayer.OnCompletionListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
+            fun from(
+                parent: ViewGroup,
+                onCompleteListener: MediaPlayer.OnCompletionListener
+            ): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = PlayVideoItemBinding.inflate(layoutInflater, parent, false)
-                return ViewHolder(binding)
+                return ViewHolder(binding, onCompleteListener)
             }
         }
 
@@ -37,9 +43,7 @@ class VideoAdapter : ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallba
                     binding.progressBar.visibility = View.GONE
                     mediaPlayer.start()
                 }
-                setOnCompletionListener { mediaPlayer ->
-                    mediaPlayer.stop()
-                }
+                setOnCompletionListener(onCompleteListener)
             }
         }
 
@@ -50,7 +54,7 @@ class VideoAdapter : ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallba
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        return ViewHolder.from(parent, onCompleteListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
