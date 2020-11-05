@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation.xml"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/playVideoFragment">
 
     <fragment
         android:id="@+id/selectVideoFragment"
@@ -25,4 +25,8 @@
             android:id="@+id/action_listFragment_to_selectVideoFragment"
             app:destination="@id/selectVideoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/playVideoFragment"
+        android:name="cloud.banson.xplayer.ui.play.PlayVideoFragment"
+        android:label="PlayVideoFragment" />
 </navigation>
