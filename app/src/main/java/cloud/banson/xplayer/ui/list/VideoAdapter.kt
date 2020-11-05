@@ -26,7 +26,7 @@ class VideoAdapter(private val onClick: (String) -> Unit) :
         fun bind(item: Video) {
             binding.itemName.text = item.name
             binding.root.setOnClickListener {
-                onClick(item.uri)
+                onClick(item.uriString)
             }
         }
     }

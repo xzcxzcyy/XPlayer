@@ -9,7 +9,7 @@
         android:id="@+id/selectVideoFragment"
         android:name="cloud.banson.xplayer.ui.select.SelectVideoFragment"
         android:label="select_video_fragment"
-        tools:layout="@layout/select_video_fragment" >
+        tools:layout="@layout/select_video_fragment">
         <action
             android:id="@+id/action_selectVideoFragment_to_listFragment"
             app:destination="@id/listFragment"
@@ -24,9 +24,21 @@
         <action
             android:id="@+id/action_listFragment_to_selectVideoFragment"
             app:destination="@id/selectVideoFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_playVideoFragment"
+            app:destination="@id/playVideoFragment" />
     </fragment>
     <fragment
         android:id="@+id/playVideoFragment"
         android:name="cloud.banson.xplayer.ui.play.PlayVideoFragment"
-        android:label="PlayVideoFragment" />
+        android:label="PlayVideoFragment"
+        tools:layout="@layout/play_video_fragment" >
+        <action
+            android:id="@+id/action_playVideoFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
 </navigation>

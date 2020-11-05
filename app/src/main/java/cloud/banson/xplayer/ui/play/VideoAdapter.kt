@@ -1,7 +1,9 @@
 package cloud.banson.xplayer.ui.play
 
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -28,16 +30,21 @@ class VideoAdapter : ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallba
         }
 
         fun bind(video: Video) {
-            binding.apply {
-                textTitle.text = video.name
-                //TODO: SETUP PLAYING EVENT
+            binding.textTitle.text = video.name
+            binding.videoView.apply {
+                setVideoURI(Uri.parse(video.uriString))
+                setOnPreparedListener { mediaPlayer ->
+                    binding.progressBar.visibility = View.GONE
+                    mediaPlayer.start()
+                }
+                setOnCompletionListener { mediaPlayer ->
+                    mediaPlayer.stop()
+                }
             }
         }
 
         fun stopOnLeaving() {
-//            binding.apply {
-//                videoView.pause()
-//            }
+            binding.videoView.pause()
             Log.d(TAG, "stopOnLeaving: Pausing..")
         }
     }
