@@ -8,15 +8,15 @@ import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.ExistListItemBinding
 import cloud.banson.xplayer.util.VideoDiffCallback
 
-class VideoAdapter(private val onClick: (String) -> Unit) :
+class VideoAdapter(private val onClick: (Long) -> Unit) :
     ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
     class ViewHolder private constructor(
         private val binding: ExistListItemBinding,
-        private val onClick: (String) -> Unit
+        private val onClick: (Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         companion object {
-            fun from(parent: ViewGroup, onClick: (String) -> Unit): ViewHolder {
+            fun from(parent: ViewGroup, onClick: (Long) -> Unit): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ExistListItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding, onClick)
@@ -26,7 +26,7 @@ class VideoAdapter(private val onClick: (String) -> Unit) :
         fun bind(item: Video) {
             binding.itemName.text = item.name
             binding.root.setOnClickListener {
-                onClick(item.uriString)
+                onClick(item.id)
             }
         }
     }

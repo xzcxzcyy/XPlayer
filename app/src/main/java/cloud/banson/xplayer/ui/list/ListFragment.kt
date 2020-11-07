@@ -17,7 +17,7 @@ class ListFragment : Fragment() {
 
     companion object {
         fun newInstance() = ListFragment()
-        private const val TAG = "LISTFRAGMENT"
+        private const val TAG = "LIST_FRAGMENT"
     }
 
     private lateinit var viewModel: ListViewModel
@@ -52,7 +52,8 @@ class ListFragment : Fragment() {
                 .navigate(ListFragmentDirections.actionListFragmentToSelectVideoFragment())
         }
         myAdapter = VideoAdapter {
-            Log.d(TAG, "initListener: navigating to play view")
+            // Log.d(TAG, "initListener: navigating to play view+$it")
+            findNavController().navigate(ListFragmentDirections.actionListFragmentToPlayVideoFragment(it))
         }
         binding.resourceRecycler.adapter = myAdapter
         binding.resourceRecycler.layoutManager = LinearLayoutManager(context)
