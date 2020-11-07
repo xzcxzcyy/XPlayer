@@ -37,13 +37,28 @@ class VideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListe
 
         fun bind(video: Video) {
             binding.textTitle.text = video.name
-            binding.videoView.apply {
+            val mVideoView = binding.videoView.apply {
                 setVideoURI(Uri.parse(video.uriString))
                 setOnPreparedListener { mediaPlayer ->
 //                    binding.progressBar.visibility = View.GONE
                     mediaPlayer.start()
                 }
                 setOnCompletionListener(onCompleteListener)
+            }
+            binding.seekBar.apply {
+                max = binding.videoView.duration
+                progress = 0
+            }
+            binding.seekBar.let { seekbar ->
+                val delayedAction: Runnable = object : Runnable {
+                    override fun run() {
+                        seekbar.progress = mVideoView.currentPosition
+                        if (mVideoView.isPlaying) {
+                            seekbar.postDelayed(this, 10)
+                        }
+                    }
+                }
+                seekbar.postDelayed(delayedAction, 10)
             }
         }
 
