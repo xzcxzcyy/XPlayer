@@ -1,15 +1,17 @@
 package cloud.banson.xplayer.ui.play
 
-import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import cloud.banson.xplayer.R
 import cloud.banson.xplayer.databinding.PlayVideoFragmentBinding
+import cloud.banson.xplayer.util.MyApplication
 
 class PlayVideoFragment : Fragment() {
 
@@ -26,7 +28,7 @@ class PlayVideoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         initView(inflater, container)
-        setUpData()
+        setUpDataAndListeners()
         return binding.root
     }
 
@@ -36,7 +38,7 @@ class PlayVideoFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.play_video_fragment, container, false)
     }
 
-    private fun setUpData() {
+    private fun setUpDataAndListeners() {
         val arguments = PlayVideoFragmentArgs.fromBundle(requireArguments())
         videoAdapter = VideoAdapter(onCompleteListener = {
             it.stop()

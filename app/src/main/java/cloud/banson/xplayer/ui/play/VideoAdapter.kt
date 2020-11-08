@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.PlayVideoItemBinding
 import cloud.banson.xplayer.util.VideoDiffCallback
+import kotlin.math.log
 
 class VideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListener) :
     ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
@@ -46,11 +47,6 @@ class VideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListe
                     val videoView = binding.videoView
                     val delayedAction: Runnable = object : Runnable {
                         override fun run() {
-                            Log.d(TAG, "${seekBar.isIndeterminate}")
-                            Log.d(
-                                TAG,
-                                "Delayed action: ${videoView.currentPosition}/${videoView.duration}"
-                            )
                             seekBar.progress =
                                 100 * videoView.currentPosition / videoView.duration
                             if (videoView.isPlaying) {
