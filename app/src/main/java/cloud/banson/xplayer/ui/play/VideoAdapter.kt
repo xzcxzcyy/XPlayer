@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import cloud.banson.xplayer.data.Video
@@ -37,34 +38,57 @@ class VideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListe
 
         fun bind(video: Video) {
             binding.textTitle.text = video.name
-            val mVideoView = binding.videoView.apply {
+            binding.videoView.apply {
                 setVideoURI(Uri.parse(video.uriString))
                 setOnPreparedListener { mediaPlayer ->
-//                    binding.progressBar.visibility = View.GONE
                     mediaPlayer.start()
+                    val seekBar = binding.seekBar
+                    val videoView = binding.videoView
+                    val delayedAction: Runnable = object : Runnable {
+                        override fun run() {
+                            Log.d(TAG, "${seekBar.isIndeterminate}")
+                            Log.d(
+                                TAG,
+                                "Delayed action: ${videoView.currentPosition}/${videoView.duration}"
+                            )
+                            seekBar.progress =
+                                100 * videoView.currentPosition / videoView.duration
+                            if (videoView.isPlaying) {
+                                seekBar.postDelayed(this, 100)
+                            }
+                        }
+                    }
+                    seekBar.postDelayed(delayedAction, 100)
                 }
                 setOnCompletionListener(onCompleteListener)
             }
             binding.seekBar.apply {
-                max = binding.videoView.duration
+                max = 100
                 progress = 0
-            }
-            binding.seekBar.let { seekbar ->
-                val delayedAction: Runnable = object : Runnable {
-                    override fun run() {
-                        seekbar.progress = mVideoView.currentPosition
-                        if (mVideoView.isPlaying) {
-                            seekbar.postDelayed(this, 10)
+                setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(
+                        seekBar: SeekBar?,
+                        progress: Int,
+                        fromUser: Boolean
+                    ) {
+                    }
+
+                    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                    }
+
+                    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                        seekBar?.let {
+                            val nowProgress = binding.videoView.duration * it.progress / 100
+                            binding.videoView.seekTo(nowProgress)
                         }
                     }
-                }
-                seekbar.postDelayed(delayedAction, 10)
+
+                })
             }
         }
 
         fun stopOnLeaving() {
             binding.videoView.pause()
-            Log.d(TAG, "stopOnLeaving: Pausing..")
         }
     }
 
