@@ -1,14 +1,16 @@
 package cloud.banson.xplayer.ui.play
 
+import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import cloud.banson.xplayer.R
 import cloud.banson.xplayer.databinding.PlayVideoFragmentBinding
+import cloud.banson.xplayer.util.MyApplication
 
 class PlayVideoFragment : Fragment() {
 
@@ -37,7 +39,7 @@ class PlayVideoFragment : Fragment() {
 
     private fun setUpDataAndListeners() {
         val arguments = PlayVideoFragmentArgs.fromBundle(requireArguments())
-        videoAdapter = PlayVideoAdapter(onCompleteListener = {
+        val onCompleteListener = { it: MediaPlayer ->
             it.stop()
             binding.viewPagerVideos.run {
                 val nextPosition = (currentItem + 1) % videoAdapter.itemCount
@@ -47,7 +49,8 @@ class PlayVideoFragment : Fragment() {
                     setCurrentItem(nextPosition, true)
                 }
             }
-        })
+        }
+        videoAdapter = PlayVideoAdapter(onCompleteListener)
         binding.viewPagerVideos.apply {
             adapter = videoAdapter
         }
