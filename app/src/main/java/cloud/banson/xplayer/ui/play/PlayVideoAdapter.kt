@@ -4,7 +4,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.recyclerview.widget.ListAdapter
@@ -12,10 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.PlayVideoItemBinding
 import cloud.banson.xplayer.util.VideoDiffCallback
-import kotlin.math.log
 
-class VideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListener) :
-    ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
+class PlayVideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListener) :
+    ListAdapter<Video, PlayVideoAdapter.ViewHolder>(VideoDiffCallback()) {
 
     companion object {
         private const val TAG = "PLAY_VIDEO_ADAPTER"
@@ -43,6 +41,7 @@ class VideoAdapter(private val onCompleteListener: MediaPlayer.OnCompletionListe
                 setVideoURI(Uri.parse(video.uriString))
                 setOnPreparedListener { mediaPlayer ->
                     mediaPlayer.start()
+                    binding.controllerLinear.bringToFront()
                     val seekBar = binding.seekBar
                     val videoView = binding.videoView
                     val delayedAction: Runnable = object : Runnable {

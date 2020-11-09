@@ -8,8 +8,8 @@ import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.ExistListItemBinding
 import cloud.banson.xplayer.util.VideoDiffCallback
 
-class VideoAdapter(private val onClick: (Long) -> Unit) :
-    ListAdapter<Video, VideoAdapter.ViewHolder>(VideoDiffCallback()) {
+class ListVideoAdapter(private val onClick: (Long) -> Unit) :
+    ListAdapter<Video, ListVideoAdapter.ViewHolder>(VideoDiffCallback()) {
     class ViewHolder private constructor(
         private val binding: ExistListItemBinding,
         private val onClick: (Long) -> Unit

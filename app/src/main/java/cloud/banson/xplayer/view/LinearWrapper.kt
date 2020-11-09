@@ -9,10 +9,13 @@ import android.widget.Toast
 import cloud.banson.xplayer.util.MyApplication
 
 class LinearWrapper(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        Toast.makeText(MyApplication.context, "LinearWrapper CLICKED", Toast.LENGTH_LONG).show()
         performClick()
+        Toast.makeText(MyApplication.context, "LinearWrapper CLICKED", Toast.LENGTH_LONG).show()
         return super.onTouchEvent(event)
+    }
+
+    override fun performClick(): Boolean {
+        return super.performClick()
     }
 }

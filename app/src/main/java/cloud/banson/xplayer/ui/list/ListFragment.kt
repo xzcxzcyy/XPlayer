@@ -2,7 +2,6 @@ package cloud.banson.xplayer.ui.list
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,7 @@ class ListFragment : Fragment() {
 
     private lateinit var viewModel: ListViewModel
     private lateinit var binding: ListFragmentBinding
-    private lateinit var myAdapter: VideoAdapter
+    private lateinit var myAdapter: ListVideoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +50,7 @@ class ListFragment : Fragment() {
             this.findNavController()
                 .navigate(ListFragmentDirections.actionListFragmentToSelectVideoFragment())
         }
-        myAdapter = VideoAdapter {
+        myAdapter = ListVideoAdapter {
             // Log.d(TAG, "initListener: navigating to play view+$it")
             findNavController().navigate(ListFragmentDirections.actionListFragmentToPlayVideoFragment(it))
         }

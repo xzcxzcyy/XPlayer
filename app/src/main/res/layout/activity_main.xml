@@ -20,7 +20,7 @@
             app:defaultNavHost="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/navigation"
+            app:navGraph="@navigation/xplayer_navigation"
             tools:ignore="FragmentTagUsage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
