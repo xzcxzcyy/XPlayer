@@ -39,15 +39,36 @@ class PlayVideoAdapter(
             }
         }
 
+        var mediaPlayer: MediaPlayer? = null
+
         @SuppressLint("ClickableViewAccessibility")
         fun bind(video: Video) {
+            val refreshSeekBar: Runnable
+            binding.apply {
+                refreshSeekBar = object : Runnable {
+                    override fun run() {
+                        seekBar.progress =
+                            100 * videoView.currentPosition / videoView.duration
+                        if (videoView.isPlaying) {
+                            seekBar.postDelayed(this, 100)
+                        }
+                    }
+                }
+            }
             val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
                 override fun onDown(e: MotionEvent?): Boolean {
                     return true
                 }
 
                 override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-                    Log.e(TAG, "onSingleTapConfirmed: heard")
+                    mediaPlayer?.let {
+                        if (it.isPlaying) {
+                            it.pause()
+                        } else {
+                            it.start()
+                            binding.seekBar.postDelayed(refreshSeekBar, 100)
+                        }
+                    }
                     return true
                 }
 
@@ -69,21 +90,11 @@ class PlayVideoAdapter(
             binding.textTitle.text = video.name
             binding.videoView.apply {
                 setVideoURI(Uri.parse(video.uriString))
-                setOnPreparedListener { mediaPlayer ->
-                    mediaPlayer.start()
+                setOnPreparedListener {
+                    mediaPlayer = it
+                    it.start()
                     binding.controllerLinear.bringToFront()
-                    val seekBar = binding.seekBar
-                    val videoView = binding.videoView
-                    val delayedAction: Runnable = object : Runnable {
-                        override fun run() {
-                            seekBar.progress =
-                                100 * videoView.currentPosition / videoView.duration
-                            if (videoView.isPlaying) {
-                                seekBar.postDelayed(this, 100)
-                            }
-                        }
-                    }
-                    seekBar.postDelayed(delayedAction, 100)
+                    binding.seekBar.postDelayed(refreshSeekBar, 100)
                 }
                 setOnCompletionListener(onCompleteListener)
                 setOnTouchListener(touchListener)
