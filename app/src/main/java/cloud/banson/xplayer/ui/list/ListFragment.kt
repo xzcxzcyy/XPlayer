@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cloud.banson.xplayer.R
 import cloud.banson.xplayer.databinding.ListFragmentBinding
+import cloud.banson.xplayer.util.MyApplication
+import io.flutter.embedding.android.FlutterActivity
 
 class ListFragment : Fragment() {
 
@@ -52,7 +54,9 @@ class ListFragment : Fragment() {
         }
         myAdapter = ListVideoAdapter {
             // Log.d(TAG, "initListener: navigating to play view+$it")
-            findNavController().navigate(ListFragmentDirections.actionListFragmentToPlayVideoFragment(it))
+            findNavController().navigate(
+                ListFragmentDirections.actionListFragmentToPlayVideoFragment(it)
+            )
         }
         binding.resourceRecycler.adapter = myAdapter
         binding.resourceRecycler.layoutManager = LinearLayoutManager(context)

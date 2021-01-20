@@ -1,2 +1,10 @@
 include ':app'
 rootProject.name = "X Player"
+
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+        settingsDir.parentFile,
+        'info_xplayer_flutter/.android/include_flutter.groovy'
+))
+include ':info_xplayer_flutter'
+project(':info_xplayer_flutter').projectDir = new File('../info_xplayer_flutter')
