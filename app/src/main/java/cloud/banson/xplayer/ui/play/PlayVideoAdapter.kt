@@ -12,10 +12,11 @@ import cloud.banson.xplayer.data.Video
 import cloud.banson.xplayer.databinding.PlayVideoItemBinding
 import cloud.banson.xplayer.util.MyApplication
 import cloud.banson.xplayer.util.VideoDiffCallback
+import io.flutter.embedding.android.FlutterActivity
 
 
 class PlayVideoAdapter(
-    private val onCompleteListener: MediaPlayer.OnCompletionListener,
+    private val onCompleteListener: MediaPlayer.OnCompletionListener
 ) :
     ListAdapter<Video, PlayVideoAdapter.ViewHolder>(VideoDiffCallback()) {
 
@@ -73,12 +74,15 @@ class PlayVideoAdapter(
                 }
 
                 override fun onSingleTapUp(e: MotionEvent?): Boolean {
-                    Log.d(TAG, "onSingleTapUp: got it!")
                     return true
                 }
 
                 override fun onDoubleTap(e: MotionEvent?): Boolean {
-                    Log.e(TAG, "onDoubleTap: got it!")
+                    binding.videoView.context.startActivity(
+                        FlutterActivity
+                            .withCachedEngine(MyApplication.flutterEngineId)
+                            .build(binding.videoView.context)
+                    )
                     return true
                 }
             }

@@ -1,9 +1,7 @@
 package cloud.banson.xplayer.ui.play
 
-import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -11,6 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import cloud.banson.xplayer.R
 import cloud.banson.xplayer.databinding.PlayVideoFragmentBinding
 import cloud.banson.xplayer.util.MyApplication
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.embedding.engine.dart.DartExecutor
+import io.flutter.plugin.common.MethodChannel
 
 class PlayVideoFragment : Fragment() {
 
@@ -67,5 +69,29 @@ class PlayVideoFragment : Fragment() {
             }
             binding.viewPagerVideos.setCurrentItem(startPos, false)
         })
+
+        MethodChannel(
+            MyApplication.flutterEngine.dartExecutor.binaryMessenger,
+            MyApplication.flutterChannelId
+        ).setMethodCallHandler { call, result ->
+            val currentId = binding.viewPagerVideos.currentItem
+            if (call.method == "getName") {
+                viewModel.playList.value.also {
+                    if (it != null) {
+                        result.success(it[currentId].name)
+                    } else {
+                        result.error("NullPointer", "playList.value is null", null)
+                    }
+                }
+            } else if (call.method == "getDuration") {
+                viewModel.playList.value.also {
+                    if (it != null) {
+                        result.success(it[currentId].time.toString())
+                    } else {
+                        result.error("NullPointer", "playList.value is null", null)
+                    }
+                }
+            }
+        }
     }
 }
