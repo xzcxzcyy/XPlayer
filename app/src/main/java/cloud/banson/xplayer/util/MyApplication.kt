@@ -11,8 +11,6 @@ import io.flutter.plugin.common.MethodChannel
 class MyApplication : Application() {
     companion object {
         private lateinit var myContext: Context
-        lateinit var flutterEngine: FlutterEngine
-
         val context: Context
             get() {
                 return myContext
@@ -22,6 +20,7 @@ class MyApplication : Application() {
         const val flutterChannelId = "banson.cloud/info"
     }
 
+    lateinit var flutterEngine: FlutterEngine
     override fun onCreate() {
         super.onCreate()
         myContext = applicationContext
@@ -29,10 +28,7 @@ class MyApplication : Application() {
     }
 
     private fun initFlutter() {
-        flutterEngine = FlutterEngine(MyApplication.context)
-        flutterEngine.dartExecutor.executeDartEntrypoint(
-            DartExecutor.DartEntrypoint.createDefault()
-        )
+        flutterEngine = FlutterEngine(this)
         FlutterEngineCache.getInstance().put(flutterEngineId, flutterEngine)
     }
 }

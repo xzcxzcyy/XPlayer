@@ -28,7 +28,7 @@ class ListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         initViewModel()
         initView(inflater, container)
         initListener()

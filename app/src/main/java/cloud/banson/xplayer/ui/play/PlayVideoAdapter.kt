@@ -13,6 +13,8 @@ import cloud.banson.xplayer.databinding.PlayVideoItemBinding
 import cloud.banson.xplayer.util.MyApplication
 import cloud.banson.xplayer.util.VideoDiffCallback
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.embedding.engine.dart.DartExecutor
 
 
 class PlayVideoAdapter(
@@ -44,6 +46,10 @@ class PlayVideoAdapter(
 
         @SuppressLint("ClickableViewAccessibility")
         fun bind(video: Video) {
+            val flutterEngine = FlutterEngineCache.getInstance().get(MyApplication.flutterEngineId)
+            flutterEngine!!.dartExecutor.executeDartEntrypoint(
+                DartExecutor.DartEntrypoint.createDefault()
+            )
             val refreshSeekBar: Runnable
             binding.apply {
                 refreshSeekBar = object : Runnable {

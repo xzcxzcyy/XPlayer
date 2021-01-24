@@ -2,6 +2,7 @@ package cloud.banson.xplayer.ui.play
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
 import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugins.GeneratedPluginRegistrant
 
 class PlayVideoFragment : Fragment() {
 
@@ -69,13 +71,15 @@ class PlayVideoFragment : Fragment() {
             }
             binding.viewPagerVideos.setCurrentItem(startPos, false)
         })
-
+        val flutterEngine = FlutterEngineCache.getInstance().get(MyApplication.flutterEngineId)
         MethodChannel(
-            MyApplication.flutterEngine.dartExecutor.binaryMessenger,
+            flutterEngine!!.dartExecutor.binaryMessenger,
             MyApplication.flutterChannelId
         ).setMethodCallHandler { call, result ->
             val currentId = binding.viewPagerVideos.currentItem
+            Log.d(TAG, "--- Into Handler!")
             if (call.method == "getName") {
+                Log.d(TAG, "MethodChannel: getName resp")
                 viewModel.playList.value.also {
                     if (it != null) {
                         result.success(it[currentId].name)
@@ -84,6 +88,7 @@ class PlayVideoFragment : Fragment() {
                     }
                 }
             } else if (call.method == "getDuration") {
+                Log.d(TAG, "MethodChannel: getDuration resp")
                 viewModel.playList.value.also {
                     if (it != null) {
                         result.success(it[currentId].time.toString())
@@ -91,7 +96,13 @@ class PlayVideoFragment : Fragment() {
                         result.error("NullPointer", "playList.value is null", null)
                     }
                 }
+            } else {
+                result.success("unrecognized invoke")
             }
         }
+        flutterEngine.dartExecutor.executeDartEntrypoint(
+            DartExecutor.DartEntrypoint.createDefault()
+        )
+        Log.d(TAG, "MethodChannel: set")
     }
 }
